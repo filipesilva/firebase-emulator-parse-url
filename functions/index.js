@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-admin.initializeApp({
+const adminApp = admin.initializeApp({
   databaseURL: "https://emulator-test-1.firebaseio.com/",
   credential: admin.credential.applicationDefault()
 });
@@ -14,5 +14,7 @@ exports.posts = functions.https.onRequest(async (request, response) => {
 });
 
 exports.postsPushHandler = functions.database.ref('/posts/{postId}').onCreate(snapshot => {
-  console.log(snapshot.ref)
+  console.log("snapshot ref", snapshot.ref.toString())
+  console.log("admin app options", adminApp.options)
+  console.log("admin app db", adminApp.database())
 });
